@@ -23,7 +23,7 @@
     <div class="content">
       <div class="container-fluid">
         <div class="row">
-          <div class="col-lg-8 offset-2">
+          <div class="col-lg-10 offset-1">
             {{-- for flash message --}}
             @include('flash::message')
             {{-- card --}}
