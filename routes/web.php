@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\CategoryController;
 
 
 Route::get('/', function () {
@@ -17,6 +18,4 @@ Route::middleware([
     })->name('dashboard');
 });
 
-Route::get('/templete', function() {
-    return view('layouts.master');
-});
+Route::resource('categories', CategoryController::class);
