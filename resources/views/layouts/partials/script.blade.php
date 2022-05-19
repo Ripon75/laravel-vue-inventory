@@ -18,6 +18,8 @@
 <script src="{{ asset('admin/plugins/datatables-buttons/js/buttons.html5.min.js') }}"></script>
 <script src="{{ asset('admin/plugins/datatables-buttons/js/buttons.print.min.js') }}"></script>
 <script src="{{ asset('admin/plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
+{{-- Sweet aleart --}}
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script>
 $('div.alert').not('.alert-important').delay(3000).fadeOut(350);
@@ -31,6 +33,26 @@ $('.datatable').DataTable({
       "autoWidth": false,
       "responsive": true,
     });
+
+    $('.sweet-alert-delete').on('click', function() {
+
+      let formId = $(this).data('form-id');
+
+      Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to delete this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Ok'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          $('#'+formId).submit();
+        }
+      })
+    });
+
 </script>
 
 @stack('scripts')

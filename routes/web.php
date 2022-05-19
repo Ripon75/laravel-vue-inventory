@@ -18,4 +18,8 @@ Route::middleware([
     })->name('dashboard');
 });
 
-Route::resource('categories', CategoryController::class);
+// Check authentication
+Route::middleware(['auth:sanctum'])->group(function() {
+    Route::resource('categories', CategoryController::class);
+});
+
