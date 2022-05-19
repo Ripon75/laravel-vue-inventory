@@ -5,9 +5,9 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
-use App\Models\Category;
+use App\Models\Brand;
 
-class CategoryController extends Controller
+class BrandController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,10 +16,10 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::orderBy('created_at', 'desc')->get();
+         $brands = Brand::orderBy('created_at', 'desc')->get();
 
-        return view('admin.category.index', [
-            'categories' => $categories
+        return view('admin.brand.index', [
+            'brands' => $brands
         ]);
     }
 
@@ -30,7 +30,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return view('admin.category.create');
+        return view('admin.brand.create');
     }
 
     /**
@@ -42,19 +42,19 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => ['required', "unique:categories,name"]
+            'name' => ['required', "unique:brands,name"]
         ]);
 
         $name = $request->input('name', null);
 
-        $categoryObj = new Category();
+        $brandObj = new Brand();
         
-        $categoryObj->name = $name;
-        $categoryObj->slug = Str::slug($name, '-');
-        $res = $categoryObj->save();
+        $brandObj->name = $name;
+        $brandObj->slug = Str::slug($name, '-');
+        $res = $brandObj->save();
 
-        flash('Category created successfully')->success();
-        return redirect()->route('categories.index');
+        flash('Brand created successfully')->success();
+        return redirect()->route('brands.index');
     }
 
     /**
@@ -76,11 +76,11 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        // if category is not found return 404 error
-        $category = Category::findOrFail($id);
+        // if brand is not found return 404 error
+        $brand = Brand::findOrFail($id);
 
-        return view('admin.category.edit', [
-            'category' => $category
+        return view('admin.brand.edit', [
+            'brand' => $brand
         ]);
     }
 
@@ -94,19 +94,19 @@ class CategoryController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'name' => ['required', "unique:categories,name, $id"]
+            'name' => ['required', "unique:brands,name, $id"]
         ]);
 
         $name = $request->input('name', null);
 
-        $category = Category::findOrFail($id);
+        $brand = brand::findOrFail($id);
         
-        $category->name = $name;
-        $category->slug = Str::slug($name, '-');
-        $res = $category->save();
+        $brand->name = $name;
+        $brand->slug = Str::slug($name, '-');
+        $res = $brand->save();
 
-        flash('Category updated successfully')->success();
-        return redirect()->route('categories.index');
+        flash('brand updated successfully')->success();
+        return redirect()->route('brands.index');
     }
 
     /**
@@ -117,10 +117,10 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        $category = category::findOrFail($id);
-        $category->delete();
+        $brand = Brand::findOrFail($id);
+        $brand->delete();
 
-        flash('Category deleted successfully')->success();
-        return redirect()->route('categories.index');
+        flash('brand deleted successfully')->success();
+        return redirect()->route('brands.index');
     }
 }

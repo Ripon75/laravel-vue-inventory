@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\BrandController;
 
 
 Route::get('/', function () {
@@ -20,6 +21,9 @@ Route::middleware([
 
 // Check authentication
 Route::middleware(['auth:sanctum'])->group(function() {
+    // Category route
     Route::resource('categories', CategoryController::class);
+    // Brand route
+    Route::resource('brands', BrandController::class);
 });
 
