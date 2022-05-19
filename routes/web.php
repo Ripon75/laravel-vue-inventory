@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\BrandController;
+use App\Http\Controllers\Admin\SizeController;
 
 
 Route::get('/', function () {
@@ -25,5 +26,7 @@ Route::middleware(['auth:sanctum'])->group(function() {
     Route::resource('categories', CategoryController::class);
     // Brand route
     Route::resource('brands', BrandController::class);
+    // Size route
+    Route::resource('sizes', SizeController::class);
 });
 

@@ -38,6 +38,13 @@
               </li>
 
               <li class="nav-item">
+                <a href="{{ route('sizes.index') }}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Sizes</p>
+                </a>
+              </li>
+
+              <li class="nav-item">
                 <a href="#" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Inactive Page</p>

@@ -19,6 +19,6 @@ class Brand extends Model
         'name'       => 'string',
         'slug'       => 'string',
         'created_at' => 'datetime:Y-m-d',
-        'updated_at' => 'datetime:Y-m-d',
+        'updated_at' => 'datetime:Y-m-d'
     ];
 }

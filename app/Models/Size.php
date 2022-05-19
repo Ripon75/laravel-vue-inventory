@@ -5,19 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Category extends Model
+class Size extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'name',
-        'slug'
+        'size'
     ];
 
     protected $casts = [
         'id'         => 'integer',
-        'name'       => 'string',
-        'slug'       => 'string',
+        'size'       => 'string',
         'created_at' => 'datetime:Y-m-d',
         'updated_at' => 'datetime:Y-m-d'
     ];
