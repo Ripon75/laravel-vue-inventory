@@ -36,7 +36,7 @@
 
                     <div class="card-body">
                         <div class="form-group">
-                            <label for="exampleInputEmail1">Size Name</label>
+                            <label for="">Size Name</label>
                             <input type="text" class="form-control" name="size" value="{{ $size->size }}">
                             @error('size')
                                 <span class="text-danger">{{ $message }}</span>

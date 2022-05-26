@@ -36,7 +36,7 @@
 
                     <div class="card-body">
                         <div class="form-group">
-                            <label for="exampleInputEmail1">Category Name</label>
+                            <label for="">Category Name</label>
                             <input type="text" class="form-control" name="name" value="{{ $category->name }}">
                             @error('name')
                                 <span class="text-danger">{{ $message }}</span>

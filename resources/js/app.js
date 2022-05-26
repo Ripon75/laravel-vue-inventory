@@ -1,18 +1,16 @@
 require('./bootstrap');
 
-// import Alpine from 'alpinejs';
-
-// window.Alpine = Alpine;
-
-// Alpine.start();
-
-
-
+// import vue
 import { createApp } from 'vue'
+// import component
 import AppCom from './components/exampleComponent';
+import ProductAdd from './components/product/ProductAdd';
 
 const app = createApp({})
 
-app.component('AppCom', AppCom)
+app
+.component('ProductAdd', ProductAdd)
+.component('AppCom', AppCom)
 
 app.mount('#app')
+
