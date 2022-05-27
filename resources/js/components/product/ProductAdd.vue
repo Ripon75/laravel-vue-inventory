@@ -37,7 +37,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="">Product image</label>
-                                <input type="file" class="form-control" placeholder="Enter product image">
+                                <input @change="selectImage" type="file" class="form-control" placeholder="Enter product image">
                             </div>
                             <div class="form-group">
                                 <label for="">Product cost price </label>
@@ -58,7 +58,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="">Product year </label>
-                                <input v-model="form.year" type="text" class="form-control" placeholder="Enter year">
+                                <input v-model="form.year" type="number" class="form-control" placeholder="Enter year">
                             </div>
                             <div class="form-group">
                                 <label for="">Product description</label>
@@ -149,7 +149,7 @@ export default {
 
     async mounted() {
         // fetch all categories
-        let result = await axios.get('/api/categories')
+        await axios.get('/api/categories')
         .then((response) => {
             this.categories = response.data.data
         })
@@ -177,6 +177,10 @@ export default {
     },
 
     methods: {
+        // for image
+        selectImage(event) {
+            this.form.image = event.target.files[0]
+        },
         // Add item
         addItem() {
             let item = {
@@ -194,7 +198,26 @@ export default {
 
         // form submit
         submitForm() {
-            console.log(this.form)
+            let formData = new FormData()
+            formData.append('category_id', this.form.category_id)
+            formData.append('brand_id', this.form.brand_id)
+            formData.append('name', this.form.name)
+            formData.append('sku', this.form.sku)
+            formData.append('image', this.form.image)
+            formData.append('cost_price', this.form.cost_price)
+            formData.append('retail_price', this.form.retail_price)
+            formData.append('year', this.form.year)
+            formData.append('description', this.form.description)
+            formData.append('status', this.form.status)
+            formData.append('items', this.form.items)
+
+            axios.post('/products', formData)
+            .then((response) => {
+                console.log(response)
+            })
+            .catch((error) => {
+                console.log(error)
+            })
         }
     },
 
