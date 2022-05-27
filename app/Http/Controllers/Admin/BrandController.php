@@ -9,11 +9,6 @@ use App\Models\Brand;
 
 class BrandController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
          $brands = Brand::orderBy('created_at', 'desc')->get();
@@ -23,22 +18,11 @@ class BrandController extends Controller
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         return view('admin.brand.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $request->validate([
@@ -57,23 +41,12 @@ class BrandController extends Controller
         return redirect()->route('brands.index');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function show($id)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
         // if brand is not found return 404 error
@@ -84,13 +57,6 @@ class BrandController extends Controller
         ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         $request->validate([
@@ -109,12 +75,6 @@ class BrandController extends Controller
         return redirect()->route('brands.index');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         $brand = Brand::findOrFail($id);
@@ -122,5 +82,15 @@ class BrandController extends Controller
 
         flash('brand deleted successfully')->success();
         return redirect()->route('brands.index');
+    }
+
+    public function getBrandJson()
+    {
+        $brands = Brand::get();
+
+        return response()->json([
+            'success' => true,
+            'data'    => $brands
+        ], 200);
     }
 }

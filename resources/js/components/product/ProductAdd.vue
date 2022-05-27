@@ -1,35 +1,202 @@
 <template>
-    <div>
-        <div class="card card-primary card-outline">
-            <div class="card-body">
-                <h5 class="card-title">Product Create</h5> <br>
-                <form action="" method="POST">
+    <form @submit.prevent="submitForm" method="POST">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card card-primary card-outline">
                     <div class="card-body">
-                        <div class="form-group">
-                            <label for="">Product name 16 number tutorial running</label>
-                            <input type="text" class="form-control" name="name" placeholder="Enter product name">
+                        <h5 class="card-title">Product Create</h5> <br>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="">Product name <span class="text-danger">*</span></label>
+                                <input v-model="form.name" type="text" class="form-control"
+                                    placeholder="Enter product name">
+                            </div>
+                            <div class="form-group">
+                                <label for="">Product category <span class="text-danger">*</span></label>
+                                <select class="form-control" v-model="form.category_id">
+                                    <option value="0">Select category</option>
+                                    <option v-for="category in categories" :key="category.id"
+                                        v-bind:value="category.id">
+                                        {{ category.name }}
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="">Product brand <span class="text-danger">*</span></label>
+                                <select class="form-control" v-model="form.brand_id">
+                                    <option value="0">Select brand</option>
+                                    <option v-for="brand in brands" :key="brand.id" v-bind:value="brand.id">
+                                        {{ brand.name }}
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="">Product SKU <span class="text-danger">*</span></label>
+                                <input v-model="form.sku" type="text" class="form-control"
+                                    placeholder="Enter product sku">
+                            </div>
+                            <div class="form-group">
+                                <label for="">Product image</label>
+                                <input type="file" class="form-control" placeholder="Enter product image">
+                            </div>
+                            <div class="form-group">
+                                <label for="">Product cost price </label>
+                                <input v-model="form.cost_price" type="number" class="form-control"
+                                    placeholder="Enter cost price">
+                            </div>
+                            <div class="form-group">
+                                <label for="">Product retail price </label>
+                                <input v-model="form.retail_price" type="number" class="form-control"
+                                    placeholder="Enter retail price">
+                            </div>
+                            <div class="form-group">
+                                <label for="">Product status <span class="text-danger">*</span></label>
+                                <select class="form-control" v-model="form.status">
+                                    <option value="1">Active</option>
+                                    <option value="0">Inctive</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="">Product year </label>
+                                <input v-model="form.year" type="text" class="form-control" placeholder="Enter year">
+                            </div>
+                            <div class="form-group">
+                                <label for="">Product description</label>
+                                <input v-model="form.description" type="text" class="form-control"
+                                    placeholder="Enter description">
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="">Product category</label>
-                            <select class="form-control">
-                                <option >lkk</option>
-                                <option >b</option>
-                            </select>
+                        <!-- /.card-body -->
+                        <div class="card-footer">
+                            <button type="submit" class="btn btn-primary btn-sm">Submit</button>
                         </div>
                     </div>
-                    <!-- /.card-body -->
-                    <div class="card-footer">
-                        <button type="submit" class="btn btn-primary btn-sm">Submit</button>
-                    </div>
-                </form>
+                </div><!-- /.card -->
             </div>
-        </div><!-- /.card -->
-    </div>
+            <!-- card for size -->
+            <div class="col-md-6">
+                <div class="card card-primary card-outline">
+                    <div class="card-body">
+                        <h5 class="card-title">Product size</h5> <br>
+                        <div class="card-body">
+                            <div class="row mb-1" v-for="(item, index) in form.items" :key="index">
+                                <div class="col-md-4">
+                                    <select class="form-control" v-model="item.size_id">
+                                        <option value="">Select size</option>
+                                        <option v-for="size in sizes" :key="size.id" :value="size.id">{{ size.size }}
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="col-md-3">
+                                    <input type="text" v-model="item.location" class="form-control"
+                                        placeholder="Location">
+                                </div>
+                                <div class="col-md-3">
+                                    <input type="number" v-model="item.quantity" class="form-control"
+                                        placeholder="Quantity">
+                                </div>
+                                <div class="col-md-2">
+                                    <button @click="deleteItem(index)" type="button" class="btn-danger btn-sm">
+                                        <i class="fa fa-trash"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <button @click="addItem" type="button" class="btn btn-primary btn-sm mt-2">
+                                <f class="fa fa-plus"></f>Add item
+                            </button>
+                        </div>
+                        <!-- /.card-body -->
+                        <div class="card-footer">
+                        </div>
+                    </div>
+                </div><!-- /.card -->
+            </div>
+        </div>
+    </form>
 </template>
 
 <script>
+import  axios from 'axios'
 
 export default {
+
+    data() {
+        return {
+            form: {
+                category_id: 0,
+                brand_id: 0,
+                name: '',
+                sku: '',
+                image: '',
+                cost_price: 0,
+                retail_price: 0,
+                year: '',
+                description: '',
+                status: 1,
+                items: [
+                    {
+                        size_id: '',
+                        location: '',
+                        quantity: 0
+                    }
+                ]
+            },
+            categories: [],
+            brands: [],
+            sizes: []
+        }
+    },
+
+    async mounted() {
+        // fetch all categories
+        let result = await axios.get('/api/categories')
+        .then((response) => {
+            this.categories = response.data.data
+        })
+        .catch((error) => {
+            console.log(error)
+        })
+
+        // fetch all brand
+        await axios.get('/api/brands')
+        .then((response) => {
+            this.brands = response.data.data
+        })
+        .catch((error) => {
+            console.log(error)
+        })
+
+        // fetch all size
+        await axios.get('/api/sizes')
+        .then((response) => {
+            this.sizes = response.data.data
+        })
+        .catch((error) => {
+            console.log(error)
+        })
+    },
+
+    methods: {
+        // Add item
+        addItem() {
+            let item = {
+                size_id: '',
+                location: '',
+                quantity: 0
+            }
+            this.form.items.push(item)
+        },
+
+        // Delete item
+        deleteItem(index) {
+            this.form.items.splice(index, 1)
+        },
+
+        // form submit
+        submitForm() {
+            console.log(this.form)
+        }
+    },
 
 }
 </script>

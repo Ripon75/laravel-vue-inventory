@@ -87,6 +87,11 @@ class CategoryController extends Controller
 
     public function getCategoryJson()
     {
-        return 'ok';
+        $categories = Category::get();
+
+        return response()->json([
+            'success' => true,
+            'data'    => $categories
+        ], 200);
     }
 }

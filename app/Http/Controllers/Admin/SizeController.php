@@ -8,11 +8,7 @@ use App\Models\Size;
 
 class SizeController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
         $sizes = Size::orderBy('created_at', 'desc')->get();
@@ -22,22 +18,11 @@ class SizeController extends Controller
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         return view('admin.size.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $request->validate([
@@ -55,23 +40,11 @@ class SizeController extends Controller
         return redirect()->route('sizes.index');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
         // if size is not found return 404 error
@@ -82,13 +55,7 @@ class SizeController extends Controller
         ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function update(Request $request, $id)
     {
         $request->validate([
@@ -106,12 +73,7 @@ class SizeController extends Controller
         return redirect()->route('sizes.index');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function destroy($id)
     {
         $size = Size::findOrFail($id);
@@ -119,5 +81,15 @@ class SizeController extends Controller
 
         flash('Size deleted successfully')->success();
         return redirect()->route('sizes.index');
+    }
+
+    public function getSizeJson()
+    {
+        $sizes = Size::get();
+
+        return response()->json([
+            'success' => true,
+            'data'    => $sizes
+        ], 200);
     }
 }
