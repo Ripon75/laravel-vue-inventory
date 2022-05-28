@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Product;
@@ -35,7 +36,25 @@ class ProductController extends Controller
 
     public function store(Request $request)
     {
-        return $request->all();
+        $validator = Validator::make($request->all(), [
+            'category_id'  => ['required', 'integer'],
+            'brand_id'     => ['required', 'integer'],
+            'name'         => ['required'],
+            'sku'          => ['required', "unique:products, sku"],
+            'image'        => ['nullable', 'image', 'mimes:jpeg,jpg,png,svg'],
+            'cost_price'   => ['required'],
+            'retail_price' => ['required'],
+            'year'         => ['required'],
+            'status'       => ['required'],
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'errors'  => $validator->errors(),
+                'message' => 'Validation error'
+            ], 401);
+        }
     }
 
     public function show($id)

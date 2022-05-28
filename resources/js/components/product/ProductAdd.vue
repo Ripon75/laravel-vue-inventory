@@ -1,6 +1,15 @@
 <template>
     <form @submit.prevent="submitForm" method="POST">
         <div class="row">
+            <div class="col-md-8">
+                <div class="text-danger">
+                    <ul>
+                        <li v-for="(error, index) in errors" :key="index">{{error[0]}}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="row">
             <div class="col-md-6">
                 <div class="card card-primary card-outline">
                     <div class="card-body">
@@ -143,7 +152,8 @@ export default {
             },
             categories: [],
             brands: [],
-            sizes: []
+            sizes: [],
+            errors: []
         }
     },
 
@@ -213,10 +223,10 @@ export default {
 
             axios.post('/products', formData)
             .then((response) => {
-                console.log(response)
+                // console.log(response)
             })
             .catch((error) => {
-                console.log(error)
+                this.errors = error.response.data.errors
             })
         }
     },
