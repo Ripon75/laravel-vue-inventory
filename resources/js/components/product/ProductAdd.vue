@@ -24,7 +24,7 @@
                                 <label for="">Product category <span class="text-danger">*</span></label>
                                 <select class="form-control" v-model="form.category_id">
                                     <option value="0">Select category</option>
-                                    <option v-for="category in categories" :key="category.id"
+                                    <option v-for="(category, index) in categories" :key="index"
                                         v-bind:value="category.id">
                                         {{ category.name }}
                                     </option>
@@ -125,6 +125,9 @@
 </template>
 
 <script>
+import * as actions from '../../store/action-types'
+import store from '../../store'
+import {mapGetters} from 'vuex'
 import  axios from 'axios'
 
 export default {
@@ -150,22 +153,23 @@ export default {
                     }
                 ]
             },
-            categories: [],
+            // categories: [],
             brands: [],
             sizes: [],
             errors: []
         }
     },
 
+    computed: {
+        // covert state category into vue property
+        ...mapGetters({
+            'categories': 'getCategories'
+        })
+    },
+
     async mounted() {
-        // fetch all categories
-        await axios.get('/api/categories')
-        .then((response) => {
-            this.categories = response.data.data
-        })
-        .catch((error) => {
-            console.log(error)
-        })
+        // Call action  for get categories
+        store.dispatch(actions.GET_CATEGORIES)
 
         // fetch all brand
         await axios.get('/api/brands')

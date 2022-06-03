@@ -5,12 +5,16 @@ import { createApp } from 'vue'
 // import component
 import AppCom from './components/exampleComponent';
 import ProductAdd from './components/product/ProductAdd';
+import store from './store';
 
-const app = createApp({})
+const app = createApp({});
 
-app
-.component('ProductAdd', ProductAdd)
-.component('AppCom', AppCom)
+app.component("ProductAdd", ProductAdd);
 
-app.mount('#app')
+// app
+// .component('ProductAdd', ProductAdd)
+// .component('AppCom', AppCom)
+
+// App.mount('#app')
+app.use(store).mount('#app')
 
