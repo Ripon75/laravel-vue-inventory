@@ -154,7 +154,7 @@ export default {
             },
             // categories: [],
             // brands: [],
-            sizes: [],
+            // sizes: [],
             errors: []
         }
     },
@@ -163,7 +163,8 @@ export default {
         // covert state category into vue property
         ...mapGetters({
             'categories': 'getCategories',
-            'brands': 'getBrands'
+            'brands': 'getBrands',
+            'sizes': 'getSizes',
         })
     },
 
@@ -172,6 +173,8 @@ export default {
         store.dispatch(actions.GET_CATEGORIES)
         // Get brands
         store.dispatch(actions.GET_BRANDS)
+        // Get sizes
+        store.dispatch(actions.GET_SIZES)
 
         // fetch all brand
         // await axios.get('/api/brands')
@@ -183,13 +186,13 @@ export default {
         // })
 
         // fetch all size
-        await axios.get('/api/sizes')
-        .then((response) => {
-            this.sizes = response.data.data
-        })
-        .catch((error) => {
-            console.log(error)
-        })
+        // await axios.get('/api/sizes')
+        // .then((response) => {
+        //     this.sizes = response.data.data
+        // })
+        // .catch((error) => {
+        //     console.log(error)
+        // })
     },
 
     methods: {

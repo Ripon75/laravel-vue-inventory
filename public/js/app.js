@@ -21922,17 +21922,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       },
       // categories: [],
       // brands: [],
-      sizes: [],
+      // sizes: [],
       errors: []
     };
   },
   computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_4__.mapGetters)({
     'categories': 'getCategories',
-    'brands': 'getBrands'
+    'brands': 'getBrands',
+    'sizes': 'getSizes'
   })),
   mounted: function mounted() {
-    var _this = this;
-
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
         while (1) {
@@ -21941,7 +21940,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
               // Call action  for get categories
               _store__WEBPACK_IMPORTED_MODULE_2__["default"].dispatch(_store_action_types__WEBPACK_IMPORTED_MODULE_1__.GET_CATEGORIES); // Get brands
 
-              _store__WEBPACK_IMPORTED_MODULE_2__["default"].dispatch(_store_action_types__WEBPACK_IMPORTED_MODULE_1__.GET_BRANDS); // fetch all brand
+              _store__WEBPACK_IMPORTED_MODULE_2__["default"].dispatch(_store_action_types__WEBPACK_IMPORTED_MODULE_1__.GET_BRANDS); // Get sizes
+
+              _store__WEBPACK_IMPORTED_MODULE_2__["default"].dispatch(_store_action_types__WEBPACK_IMPORTED_MODULE_1__.GET_SIZES); // fetch all brand
               // await axios.get('/api/brands')
               // .then((response) => {
               //     this.brands = response.data.data
@@ -21950,15 +21951,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
               //     console.log(error)
               // })
               // fetch all size
+              // await axios.get('/api/sizes')
+              // .then((response) => {
+              //     this.sizes = response.data.data
+              // })
+              // .catch((error) => {
+              //     console.log(error)
+              // })
 
-              _context.next = 4;
-              return axios__WEBPACK_IMPORTED_MODULE_3___default().get('/api/sizes').then(function (response) {
-                _this.sizes = response.data.data;
-              })["catch"](function (error) {
-                console.log(error);
-              });
-
-            case 4:
+            case 3:
             case "end":
               return _context.stop();
           }
@@ -21986,7 +21987,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     // form submit
     submitForm: function submitForm() {
-      var _this2 = this;
+      var _this = this;
 
       var formData = new FormData();
       formData.append('category_id', this.form.category_id);
@@ -22002,7 +22003,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       formData.append('items', this.form.items);
       axios__WEBPACK_IMPORTED_MODULE_3___default().post('/products', formData).then(function (response) {// console.log(response)
       })["catch"](function (error) {
-        _this2.errors = error.response.data.errors;
+        _this.errors = error.response.data.errors;
       });
     }
   }
@@ -22418,7 +22419,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       "onUpdate:modelValue": function onUpdateModelValue($event) {
         return item.size_id = $event;
       }
-    }, [_hoisted_49, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.sizes, function (size) {
+    }, [_hoisted_49, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(_ctx.sizes, function (size) {
       return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("option", {
         key: size.id,
         value: size.id
@@ -22544,12 +22545,15 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "GET_BRANDS": () => (/* binding */ GET_BRANDS),
-/* harmony export */   "GET_CATEGORIES": () => (/* binding */ GET_CATEGORIES)
+/* harmony export */   "GET_CATEGORIES": () => (/* binding */ GET_CATEGORIES),
+/* harmony export */   "GET_SIZES": () => (/* binding */ GET_SIZES)
 /* harmony export */ });
 // For category
 var GET_CATEGORIES = 'GET_CATEGORIES'; // For brands
 
-var GET_BRANDS = 'GET_BRANDS';
+var GET_BRANDS = 'GET_BRANDS'; // For sizes
+
+var GET_SIZES = 'GET_SIZES';
 
 /***/ }),
 
@@ -22564,18 +22568,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm-bundler.js");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm-bundler.js");
 /* harmony import */ var _modules_category__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./modules/category */ "./resources/js/store/modules/category/index.js");
 /* harmony import */ var _modules_brand__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./modules/brand */ "./resources/js/store/modules/brand/index.js");
+/* harmony import */ var _modules_size__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./modules/size */ "./resources/js/store/modules/size/index.js");
  // import category index
 
  // import brand index
 
+ // import size index
 
-var store = (0,vuex__WEBPACK_IMPORTED_MODULE_2__.createStore)({
+
+var store = (0,vuex__WEBPACK_IMPORTED_MODULE_3__.createStore)({
   modules: {
     categories: _modules_category__WEBPACK_IMPORTED_MODULE_0__["default"],
-    brands: _modules_brand__WEBPACK_IMPORTED_MODULE_1__["default"]
+    brands: _modules_brand__WEBPACK_IMPORTED_MODULE_1__["default"],
+    sizes: _modules_size__WEBPACK_IMPORTED_MODULE_2__["default"]
   }
 });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (store);
@@ -22788,6 +22796,108 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 /***/ }),
 
+/***/ "./resources/js/store/modules/size/actions.js":
+/*!****************************************************!*\
+  !*** ./resources/js/store/modules/size/actions.js ***!
+  \****************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _action_types__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../action-types */ "./resources/js/store/action-types.js");
+/* harmony import */ var _mutation_types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../mutation-types */ "./resources/js/store/mutation-types.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_defineProperty({}, _action_types__WEBPACK_IMPORTED_MODULE_0__.GET_SIZES, function (_ref) {
+  var commit = _ref.commit;
+  axios__WEBPACK_IMPORTED_MODULE_2___default().get('/api/sizes').then(function (response) {
+    if (response.data.success) {
+      commit(_mutation_types__WEBPACK_IMPORTED_MODULE_1__.SET_SIZES, response.data.data);
+    }
+  })["catch"](function (error) {
+    console.log(error);
+  });
+}));
+
+/***/ }),
+
+/***/ "./resources/js/store/modules/size/getters.js":
+/*!****************************************************!*\
+  !*** ./resources/js/store/modules/size/getters.js ***!
+  \****************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  getSizes: function getSizes(state) {
+    return state.sizes;
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/store/modules/size/index.js":
+/*!**************************************************!*\
+  !*** ./resources/js/store/modules/size/index.js ***!
+  \**************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./actions */ "./resources/js/store/modules/size/actions.js");
+/* harmony import */ var _getters__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./getters */ "./resources/js/store/modules/size/getters.js");
+/* harmony import */ var _mutations__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./mutations */ "./resources/js/store/modules/size/mutations.js");
+
+
+
+var state = {
+  sizes: []
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  state: state,
+  actions: _actions__WEBPACK_IMPORTED_MODULE_0__["default"],
+  getters: _getters__WEBPACK_IMPORTED_MODULE_1__["default"],
+  mutations: _mutations__WEBPACK_IMPORTED_MODULE_2__["default"]
+});
+
+/***/ }),
+
+/***/ "./resources/js/store/modules/size/mutations.js":
+/*!******************************************************!*\
+  !*** ./resources/js/store/modules/size/mutations.js ***!
+  \******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _mutation_types__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../mutation-types */ "./resources/js/store/mutation-types.js");
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_defineProperty({}, _mutation_types__WEBPACK_IMPORTED_MODULE_0__.SET_SIZES, function (state, payload) {
+  state.sizes = payload;
+}));
+
+/***/ }),
+
 /***/ "./resources/js/store/mutation-types.js":
 /*!**********************************************!*\
   !*** ./resources/js/store/mutation-types.js ***!
@@ -22798,12 +22908,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "SET_BRANDS": () => (/* binding */ SET_BRANDS),
-/* harmony export */   "SET_CATEGORIES": () => (/* binding */ SET_CATEGORIES)
+/* harmony export */   "SET_CATEGORIES": () => (/* binding */ SET_CATEGORIES),
+/* harmony export */   "SET_SIZES": () => (/* binding */ SET_SIZES)
 /* harmony export */ });
 // For categories
 var SET_CATEGORIES = 'SET_CATEGORIES'; // for brands
 
-var SET_BRANDS = 'SET_BRANDS';
+var SET_BRANDS = 'SET_BRANDS'; // for sizes
+
+var SET_SIZES = 'SET_SIZES';
 
 /***/ }),
 
