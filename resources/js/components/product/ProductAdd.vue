@@ -67,7 +67,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="">Product year </label>
-                                <input v-model="form.year" type="number" class="form-control" placeholder="Enter year">
+                                <input v-model="form.year" type="number" class="form-control" placeholder="Enter year Ex: 2022">
                             </div>
                             <div class="form-group">
                                 <label for="">Product description</label>
@@ -131,7 +131,6 @@ import {mapGetters} from 'vuex'
 import  axios from 'axios'
 
 export default {
-
     data() {
         return {
             form: {
@@ -154,7 +153,7 @@ export default {
                 ]
             },
             // categories: [],
-            brands: [],
+            // brands: [],
             sizes: [],
             errors: []
         }
@@ -163,22 +162,25 @@ export default {
     computed: {
         // covert state category into vue property
         ...mapGetters({
-            'categories': 'getCategories'
+            'categories': 'getCategories',
+            'brands': 'getBrands'
         })
     },
 
     async mounted() {
         // Call action  for get categories
         store.dispatch(actions.GET_CATEGORIES)
+        // Get brands
+        store.dispatch(actions.GET_BRANDS)
 
         // fetch all brand
-        await axios.get('/api/brands')
-        .then((response) => {
-            this.brands = response.data.data
-        })
-        .catch((error) => {
-            console.log(error)
-        })
+        // await axios.get('/api/brands')
+        // .then((response) => {
+        //     this.brands = response.data.data
+        // })
+        // .catch((error) => {
+        //     console.log(error)
+        // })
 
         // fetch all size
         await axios.get('/api/sizes')
