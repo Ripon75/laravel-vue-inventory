@@ -1,3 +1,5 @@
+// For errord
+export const SET_ERRORS = 'SET_ERRORS'
 // For categories
 export const SET_CATEGORIES = 'SET_CATEGORIES'
 // for brands

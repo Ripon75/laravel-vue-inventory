@@ -6,7 +6,6 @@ export default {
     [actions.GET_BRANDS]({commit}) {
         axios.get('/api/brands')
         .then((response) => {
-            console.log(response)
                 if (response.data.success) {
                     commit(mutations.SET_BRANDS, response.data.data)
                 }

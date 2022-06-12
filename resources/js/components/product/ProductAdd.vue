@@ -152,9 +152,6 @@ export default {
                     }
                 ]
             },
-            // categories: [],
-            // brands: [],
-            // sizes: [],
             errors: []
         }
     },
@@ -168,31 +165,13 @@ export default {
         })
     },
 
-    async mounted() {
+    mounted() {
         // Call action  for get categories
         store.dispatch(actions.GET_CATEGORIES)
         // Get brands
         store.dispatch(actions.GET_BRANDS)
         // Get sizes
         store.dispatch(actions.GET_SIZES)
-
-        // fetch all brand
-        // await axios.get('/api/brands')
-        // .then((response) => {
-        //     this.brands = response.data.data
-        // })
-        // .catch((error) => {
-        //     console.log(error)
-        // })
-
-        // fetch all size
-        // await axios.get('/api/sizes')
-        // .then((response) => {
-        //     this.sizes = response.data.data
-        // })
-        // .catch((error) => {
-        //     console.log(error)
-        // })
     },
 
     methods: {
@@ -230,13 +209,7 @@ export default {
             formData.append('status', this.form.status)
             formData.append('items', this.form.items)
 
-            axios.post('/products', formData)
-            .then((response) => {
-                // console.log(response)
-            })
-            .catch((error) => {
-                this.errors = error.response.data.errors
-            })
+            store.dispatch(actions.ADD_PRODUCT, this.form)
         }
     },
 
