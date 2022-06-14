@@ -6,8 +6,9 @@ use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
-use App\Models\Product;
+use App\Models\ProductSizeStock;
 use App\Models\Category;
+use App\Models\Product;
 use App\Models\Brand;
 use App\Models\Size;
 use Auth;
@@ -39,15 +40,15 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            // 'category_id'  => ['required', 'integer'],
-            // 'brand_id'     => ['required', 'integer'],
-            // 'name'         => ['required'],
-            // 'sku'          => ['required', "unique:products"],
-            // 'image'        => ['nullable', 'image', 'mimes:jpeg,jpg,png,svg'],
-            // 'cost_price'   => ['required'],
-            // 'retail_price' => ['required'],
-            // 'year'         => ['required'],
-            // 'status'       => ['required'],
+            'category_id'  => ['required', 'integer'],
+            'brand_id'     => ['required', 'integer'],
+            'name'         => ['required'],
+            'sku'          => ['required', "unique:products"],
+            'image'        => ['nullable', 'image', 'mimes:jpeg,jpg,png,svg'],
+            'cost_price'   => ['required'],
+            'retail_price' => ['required'],
+            'year'         => ['required'],
+            'status'       => ['required'],
         ]);
 
         if ($validator->fails()) {
@@ -58,9 +59,9 @@ class ProductController extends Controller
             ], 401);
         }
 
-        $categoryId = $request->input('category_id', null);
-        $brandId    = $request->input('brand_id', null);
-        $name       = $request->input('name', null);
+        $categoryId  = $request->input('category_id', null);
+        $brandId     = $request->input('brand_id', null);
+        $name        = $request->input('name', null);
         $sku         = $request->input('sku', null);
         $costPrice   = $request->input('cost_price', 0);
         $retailPrice = $request->input('retail_price', 0);
@@ -86,15 +87,29 @@ class ProductController extends Controller
             $file = $request->image;
             $ext  = $file->getClientOriginalExtension();
             $name = Str::random(5) . '.' . $ext;
-            $file->storeAs('images/products', $name);
+            $file->storeAs('public/images/products', $name);
             $productObj->image = $name;
         }
 
         $res = $productObj->save();
 
-        return $productObj;
+        // Store product size stock
+        $items = $request->items;
+        if ($items) {
+            foreach(json_decode($items) as $item) {
+                $sizeStockObj             = new ProductSizeStock();
+                $sizeStockObj->product_id = $productObj->id;
+                $sizeStockObj->size_id    = $item->size_id;
+                $sizeStockObj->location   = $item->location;
+                $sizeStockObj->quantity   = $item->quantity;
+                $sizeStockObj->save();
+            }
+        }
 
-        // return back()->with('message', 'Product create successfully');
+        return response()->json([
+            'success' => true,
+            'message' => 'Product create successfully done.'
+        ], 201);
     }
 
     public function show($id)

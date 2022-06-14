@@ -6,7 +6,9 @@ export default {
     [actions.ADD_PRODUCT]({commit}, payload) {
         axios.post('/products', payload)
         .then((response) => {
-            console.log(response);
+            if (response.data.success) {
+                window.location = '/products'
+            }
         })
         .catch((error) => {
             commit(mutations.SET_ERRORS, error.response.data.errors)

@@ -203,7 +203,7 @@ export default {
             formData.append('year', this.form.year)
             formData.append('description', this.form.description)
             formData.append('status', this.form.status)
-            formData.append('items', this.form.items)
+            formData.append('items', JSON.stringify(this.form.items))
 
             store.dispatch(actions.ADD_PRODUCT, formData)
         }

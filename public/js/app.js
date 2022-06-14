@@ -21950,7 +21950,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       formData.append('year', this.form.year);
       formData.append('description', this.form.description);
       formData.append('status', this.form.status);
-      formData.append('items', this.form.items);
+      formData.append('items', JSON.stringify(this.form.items));
       _store__WEBPACK_IMPORTED_MODULE_1__["default"].dispatch(_store_action_types__WEBPACK_IMPORTED_MODULE_0__.ADD_PRODUCT, formData);
     }
   }
@@ -22821,7 +22821,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_defineProperty({}, _action_types__WEBPACK_IMPORTED_MODULE_0__.ADD_PRODUCT, function (_ref, payload) {
   var commit = _ref.commit;
   axios__WEBPACK_IMPORTED_MODULE_2___default().post('/products', payload).then(function (response) {
-    console.log(response);
+    if (response.data.success) {
+      window.location = '/products';
+    }
   })["catch"](function (error) {
     commit(_mutation_types__WEBPACK_IMPORTED_MODULE_1__.SET_ERRORS, error.response.data.errors);
   });
