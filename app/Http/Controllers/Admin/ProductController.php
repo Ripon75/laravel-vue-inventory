@@ -5,10 +5,12 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use App\Models\Product;
 use App\Models\Category;
 use App\Models\Brand;
 use App\Models\Size;
+use Auth;
 
 class ProductController extends Controller
 {
@@ -37,15 +39,15 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'category_id'  => ['required', 'integer'],
-            'brand_id'     => ['required', 'integer'],
-            'name'         => ['required'],
-            'sku'          => ['required', "unique:products, sku"],
-            'image'        => ['nullable', 'image', 'mimes:jpeg,jpg,png,svg'],
-            'cost_price'   => ['required'],
-            'retail_price' => ['required'],
-            'year'         => ['required'],
-            'status'       => ['required'],
+            // 'category_id'  => ['required', 'integer'],
+            // 'brand_id'     => ['required', 'integer'],
+            // 'name'         => ['required'],
+            // 'sku'          => ['required', "unique:products"],
+            // 'image'        => ['nullable', 'image', 'mimes:jpeg,jpg,png,svg'],
+            // 'cost_price'   => ['required'],
+            // 'retail_price' => ['required'],
+            // 'year'         => ['required'],
+            // 'status'       => ['required'],
         ]);
 
         if ($validator->fails()) {
@@ -55,6 +57,44 @@ class ProductController extends Controller
                 'message' => 'Validation error'
             ], 401);
         }
+
+        $categoryId = $request->input('category_id', null);
+        $brandId    = $request->input('brand_id', null);
+        $name       = $request->input('name', null);
+        $sku         = $request->input('sku', null);
+        $costPrice   = $request->input('cost_price', 0);
+        $retailPrice = $request->input('retail_price', 0);
+        $year        = $request->input('year', null);
+        $status      = $request->input('status', null);
+        $description = $request->input('description', null);
+
+
+        $productObj = new Product();
+
+        $productObj->user_id      = Auth::id();
+        $productObj->category_id  = $categoryId;
+        $productObj->brand_id     = $brandId;
+        $productObj->name         = $name;
+        $productObj->sku          = $sku;
+        $productObj->cost_price   = $costPrice;
+        $productObj->retail_price = $retailPrice;
+        $productObj->year         = $year;
+        $productObj->status       = $status;
+        $productObj->description  = $description;
+        // For image
+        if ($request->hasFile('image')) {
+            $file = $request->image;
+            $ext  = $file->getClientOriginalExtension();
+            $name = Str::random(5) . '.' . $ext;
+            $file->storeAs('images/products', $name);
+            $productObj->image = $name;
+        }
+
+        $res = $productObj->save();
+
+        return $productObj;
+
+        // return back()->with('message', 'Product create successfully');
     }
 
     public function show($id)

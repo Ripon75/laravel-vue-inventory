@@ -15,7 +15,7 @@
                             <div class="form-group">
                                 <label for="">Product category <span class="text-danger">*</span></label>
                                 <select class="form-control" v-model="form.category_id">
-                                    <option value="0">Select category</option>
+                                    <option value="">Select category</option>
                                     <option v-for="(category, index) in categories" :key="index"
                                         v-bind:value="category.id">
                                         {{ category.name }}
@@ -25,14 +25,14 @@
                             <div class="form-group">
                                 <label for="">Product brand <span class="text-danger">*</span></label>
                                 <select class="form-control" v-model="form.brand_id">
-                                    <option value="0">Select brand</option>
+                                    <option value="">Select brand</option>
                                     <option v-for="brand in brands" :key="brand.id" v-bind:value="brand.id">
                                         {{ brand.name }}
                                     </option>
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="">Product SKU <span class="text-danger">*</span></label>
+                                <label>Product SKU <span class="text-danger">*</span></label>
                                 <input v-model="form.sku" type="text" class="form-control"
                                     placeholder="Enter product sku">
                             </div>
@@ -130,8 +130,8 @@ export default {
     data() {
         return {
             form: {
-                category_id: 0,
-                brand_id: 0,
+                category_id: '',
+                brand_id: '',
                 name: '',
                 sku: '',
                 image: '',
@@ -172,8 +172,8 @@ export default {
 
     methods: {
         // for image
-        selectImage(event) {
-            this.form.image = event.target.files[0]
+        selectImage(e) {
+            this.form.image = e.target.files[0]
         },
         // Add item
         addItem() {
@@ -205,7 +205,7 @@ export default {
             formData.append('status', this.form.status)
             formData.append('items', this.form.items)
 
-            store.dispatch(actions.ADD_PRODUCT, this.form)
+            store.dispatch(actions.ADD_PRODUCT, formData)
         }
     },
 

@@ -21887,8 +21887,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   data: function data() {
     return {
       form: {
-        category_id: 0,
-        brand_id: 0,
+        category_id: '',
+        brand_id: '',
         name: '',
         sku: '',
         image: '',
@@ -21921,8 +21921,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   methods: {
     // for image
-    selectImage: function selectImage(event) {
-      this.form.image = event.target.files[0];
+    selectImage: function selectImage(e) {
+      this.form.image = e.target.files[0];
     },
     // Add item
     addItem: function addItem() {
@@ -21951,7 +21951,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       formData.append('description', this.form.description);
       formData.append('status', this.form.status);
       formData.append('items', this.form.items);
-      _store__WEBPACK_IMPORTED_MODULE_1__["default"].dispatch(_store_action_types__WEBPACK_IMPORTED_MODULE_0__.ADD_PRODUCT, this.form);
+      _store__WEBPACK_IMPORTED_MODULE_1__["default"].dispatch(_store_action_types__WEBPACK_IMPORTED_MODULE_0__.ADD_PRODUCT, formData);
     }
   }
 });
@@ -22072,7 +22072,7 @@ var _hoisted_12 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 );
 
 var _hoisted_13 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
-  value: "0"
+  value: ""
 }, "Select category", -1
 /* HOISTED */
 );
@@ -22091,7 +22091,7 @@ var _hoisted_16 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 );
 
 var _hoisted_17 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
-  value: "0"
+  value: ""
 }, "Select brand", -1
 /* HOISTED */
 );
@@ -22101,9 +22101,7 @@ var _hoisted_19 = {
   "class": "form-group"
 };
 
-var _hoisted_20 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
-  "for": ""
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Product SKU "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+var _hoisted_20 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Product SKU "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
   "class": "text-danger"
 }, "*")], -1
 /* HOISTED */
