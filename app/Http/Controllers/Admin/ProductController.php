@@ -17,7 +17,7 @@ class ProductController extends Controller
 {
     public function index()
     {
-        $products = Product::get();
+        $products = Product::with(['category', 'brand'])->get();
 
         return view('admin.product.index', [
             'products' => $products
@@ -114,12 +114,21 @@ class ProductController extends Controller
 
     public function show($id)
     {
-        //
+        $product = Product::with(['category', 'brand', 'productStock.size'])
+        ->find($id);
+
+        return view('admin.product.show', [
+            'product' => $product
+        ]);
     }
 
     public function edit($id)
     {
-        //
+        $product = Product::find($id);
+
+        return view('admin.product.edit', [
+            'product' => $product
+        ]);
     }
 
     public function update(Request $request, $id)
@@ -129,6 +138,10 @@ class ProductController extends Controller
 
     public function destroy($id)
     {
-        //
+        $product = Product::find($id);
+        $product->delete();
+        flash('Product deleted successfully')->success();
+
+        return back();
     }
 }

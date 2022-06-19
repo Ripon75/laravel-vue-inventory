@@ -38,23 +38,33 @@
                 <table class="table table-bordered datatable">
                     <thead>
                         <th>SL</th>
+                        <th class="text-center">Image</th>
                         <th>Name</th>
+                        <th>SKU</th>
+                        <th>Category</th>
+                        <th>Brand</th>
                         <th>Action</th>
                     </thead>
                     <tbody>
                         @foreach ($products as $key => $product)
                         <tr class="text-center">
                             <td>{{ ++$key }}</td>
+                            <td class="text-center">
+                              <img style="width: 64px" src="{{ asset('storage/images/products/'. $product->image) }}" alt="product_image">
+                            </td>
                             <td>{{ $product->name }}</td>
+                            <td>{{ $product->sku }}</td>
+                            <td>{{ ($product->category->name) ?? null }}</td>
+                            <td>{{ ($product->brand->name) ?? null }}</td>
                             <td>
-                                <a href="{{ route('products.edit', $product->id) }}" class="btn btn-info">
-                                  <i class="fa fa-edit"></i>Edit
+                                <a href="{{ route('products.edit', $product->id) }}" class="btn btn-info btn-sm">
+                                  <i class="fa fa-edit"></i>
                                 </a>
-                                {{-- <a href="{{ route('products.show', $product->id) }}"  class="btn btn-success">
-                                  <i class="fa fa-eye"></i>Show
-                                </a> --}}
-                                <a href="javascript:;" class="btn btn-danger sweet-alert-delete ml-2" data-form-id="product-delete-{{ $product->id }}">
-                                  <i class="fa fa-trash"></i>Delete
+                                <a href="{{ route('products.show', $product->id) }}" class="btn btn-primary btn-sm ml-2">
+                                  <i class="fa fa-eye"></i>
+                                </a>
+                                <a href="javascript:;" class="btn btn-danger sweet-alert-delete btn-sm ml-2" data-form-id="product-delete-{{ $product->id }}">
+                                  <i class="fa fa-trash"></i>
                                 </a>
                                 <form id="product-delete-{{ $product->id }}" action="{{ route('products.destroy', $product->id) }}" method="POST">
                                   @csrf
