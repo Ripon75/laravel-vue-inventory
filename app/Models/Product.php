@@ -22,6 +22,11 @@ class Product extends Model
         'description'
     ];
 
+    protected $casts = [
+        'id'   => 'integer',
+        'name' => 'string'
+    ];
+
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id', 'id');

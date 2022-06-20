@@ -181,6 +181,7 @@ export default {
         this.form.year = this.product.year
         this.form.description = this.product.description
         this.form.status = this.product.status
+        this.form.items = this.product.product_stock
     },
 
     methods: {
@@ -206,6 +207,7 @@ export default {
         // form submit
         submitForm() {
             let formData = new FormData()
+            formData.append('_method', 'PUT')
             formData.append('category_id', this.form.category_id)
             formData.append('brand_id', this.form.brand_id)
             formData.append('name', this.form.name)
@@ -218,7 +220,12 @@ export default {
             formData.append('status', this.form.status)
             formData.append('items', JSON.stringify(this.form.items))
 
-            store.dispatch(actions.ADD_PRODUCT, formData)
+            let payload = {
+                data: formData,
+                id: this.product.id
+            }
+
+            store.dispatch(actions.EDIT_PRODUCT, payload)
         }
     },
 

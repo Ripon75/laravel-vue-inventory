@@ -22032,6 +22032,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     this.form.year = this.product.year;
     this.form.description = this.product.description;
     this.form.status = this.product.status;
+    this.form.items = this.product.product_stock;
   },
   methods: {
     // for image
@@ -22054,6 +22055,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     // form submit
     submitForm: function submitForm() {
       var formData = new FormData();
+      formData.append('_method', 'PUT');
       formData.append('category_id', this.form.category_id);
       formData.append('brand_id', this.form.brand_id);
       formData.append('name', this.form.name);
@@ -22065,7 +22067,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       formData.append('description', this.form.description);
       formData.append('status', this.form.status);
       formData.append('items', JSON.stringify(this.form.items));
-      _store__WEBPACK_IMPORTED_MODULE_1__["default"].dispatch(_store_action_types__WEBPACK_IMPORTED_MODULE_0__.ADD_PRODUCT, formData);
+      var payload = {
+        data: formData,
+        id: this.product.id
+      };
+      _store__WEBPACK_IMPORTED_MODULE_1__["default"].dispatch(_store_action_types__WEBPACK_IMPORTED_MODULE_0__.EDIT_PRODUCT, payload);
     }
   }
 });
@@ -23082,6 +23088,7 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "ADD_PRODUCT": () => (/* binding */ ADD_PRODUCT),
+/* harmony export */   "EDIT_PRODUCT": () => (/* binding */ EDIT_PRODUCT),
 /* harmony export */   "GET_BRANDS": () => (/* binding */ GET_BRANDS),
 /* harmony export */   "GET_CATEGORIES": () => (/* binding */ GET_CATEGORIES),
 /* harmony export */   "GET_SIZES": () => (/* binding */ GET_SIZES)
@@ -23094,6 +23101,7 @@ var GET_BRANDS = 'GET_BRANDS'; // For sizes
 var GET_SIZES = 'GET_SIZES'; // For product
 
 var ADD_PRODUCT = 'ADD_PRODUCT';
+var EDIT_PRODUCT = 'EDIT_PRODUCT';
 
 /***/ }),
 
@@ -23357,12 +23365,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _mutation_types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../mutation-types */ "./resources/js/store/mutation-types.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
+var _actions$ADD_PRODUCT$;
+
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 
 
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_defineProperty({}, _action_types__WEBPACK_IMPORTED_MODULE_0__.ADD_PRODUCT, function (_ref, payload) {
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_actions$ADD_PRODUCT$ = {}, _defineProperty(_actions$ADD_PRODUCT$, _action_types__WEBPACK_IMPORTED_MODULE_0__.ADD_PRODUCT, function (_ref, payload) {
   var commit = _ref.commit;
   axios__WEBPACK_IMPORTED_MODULE_2___default().post('/products', payload).then(function (response) {
     if (response.data.success) {
@@ -23371,7 +23381,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   })["catch"](function (error) {
     commit(_mutation_types__WEBPACK_IMPORTED_MODULE_1__.SET_ERRORS, error.response.data.errors);
   });
-}));
+}), _defineProperty(_actions$ADD_PRODUCT$, _action_types__WEBPACK_IMPORTED_MODULE_0__.EDIT_PRODUCT, function (_ref2, payload) {
+  var commit = _ref2.commit;
+  axios__WEBPACK_IMPORTED_MODULE_2___default().post("/products/".concat(payload.id), payload.data).then(function (response) {
+    if (response.data.success) {
+      window.location = '/products';
+    }
+  })["catch"](function (error) {
+    commit(_mutation_types__WEBPACK_IMPORTED_MODULE_1__.SET_ERRORS, error.response.data.errors);
+  });
+}), _actions$ADD_PRODUCT$);
 
 /***/ }),
 

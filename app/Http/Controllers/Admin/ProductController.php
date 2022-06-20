@@ -106,6 +106,8 @@ class ProductController extends Controller
             }
         }
 
+        flash('Product update successfully')->success();
+
         return response()->json([
             'success' => true,
             'message' => 'Product create successfully done.'
@@ -124,7 +126,7 @@ class ProductController extends Controller
 
     public function edit($id)
     {
-        $product = Product::find($id);
+        $product = Product::with(['productStock'])->find($id);
 
         return view('admin.product.edit', [
             'product' => $product
@@ -133,7 +135,82 @@ class ProductController extends Controller
 
     public function update(Request $request, $id)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'category_id'  => ['required', 'integer'],
+            'brand_id'     => ['required', 'integer'],
+            'name'         => ['required'],
+            'sku'          => ['required', "unique:products,sku, $id"],
+            'image'        => ['nullable', 'image', 'mimes:jpeg,jpg,png,svg'],
+            'cost_price'   => ['required'],
+            'retail_price' => ['required'],
+            'year'         => ['required'],
+            'status'       => ['required'],
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'errors'  => $validator->errors(),
+                'message' => 'Validation error'
+            ], 401);
+        }
+
+        $categoryId  = $request->input('category_id', null);
+        $brandId     = $request->input('brand_id', null);
+        $name        = $request->input('name', null);
+        $sku         = $request->input('sku', null);
+        $costPrice   = $request->input('cost_price', 0);
+        $retailPrice = $request->input('retail_price', 0);
+        $year        = $request->input('year', null);
+        $status      = $request->input('status', null);
+        $description = $request->input('description', null);
+
+
+        $product = Product::find($id);
+
+        $product->user_id      = Auth::id();
+        $product->category_id  = $categoryId;
+        $product->brand_id     = $brandId;
+        $product->name         = $name;
+        $product->sku          = $sku;
+        $product->cost_price   = $costPrice;
+        $product->retail_price = $retailPrice;
+        $product->year         = $year;
+        $product->status       = $status;
+        $product->description  = $description;
+        // For image
+        if ($request->hasFile('image')) {
+            $file = $request->image;
+            $ext  = $file->getClientOriginalExtension();
+            $name = Str::random(5) . '.' . $ext;
+            $file->storeAs('public/images/products', $name);
+            $product->image = $name;
+        }
+
+        $res = $product->save();
+
+        // Delete old data
+        ProductSizeStock::where('product_id', $id)->delete();
+
+        // Store product size stock
+        $items = $request->items;
+        if ($items) {
+            foreach(json_decode($items) as $item) {
+                $sizeStockObj             = new ProductSizeStock();
+                $sizeStockObj->product_id = $product->id;
+                $sizeStockObj->size_id    = $item->size_id;
+                $sizeStockObj->location   = $item->location;
+                $sizeStockObj->quantity   = $item->quantity;
+                $sizeStockObj->save();
+            }
+        }
+
+        flash('Product update successfully')->success();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Product create successfully done.'
+        ], 201);
     }
 
     public function destroy($id)
