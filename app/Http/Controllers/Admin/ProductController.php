@@ -221,4 +221,14 @@ class ProductController extends Controller
 
         return back();
     }
+
+     public function getProductJson()
+    {
+        $products = Product::with(['productStock.size'])->get();
+
+        return response()->json([
+            'success' => true,
+            'data'    => $products
+        ], 200);
+    }
 }

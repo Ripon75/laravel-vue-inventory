@@ -23026,7 +23026,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_exampleComponent__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/exampleComponent */ "./resources/js/components/exampleComponent.vue");
 /* harmony import */ var _components_product_ProductAdd__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/product/ProductAdd */ "./resources/js/components/product/ProductAdd.vue");
 /* harmony import */ var _components_product_ProductEdit__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/product/ProductEdit */ "./resources/js/components/product/ProductEdit.vue");
-/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./store */ "./resources/js/store/index.js");
+/* harmony import */ var _components_stock_StockManage__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/stock/StockManage */ "./resources/js/components/stock/StockManage.vue");
+/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./store */ "./resources/js/store/index.js");
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js"); // import vue
 
 
@@ -23036,14 +23037,12 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js"); // import
 
 
 
+
 var app = (0,vue__WEBPACK_IMPORTED_MODULE_0__.createApp)({});
 app.component("ProductAdd", _components_product_ProductAdd__WEBPACK_IMPORTED_MODULE_2__["default"]);
-app.component("ProductEdit", _components_product_ProductEdit__WEBPACK_IMPORTED_MODULE_3__["default"]); // app
-// .component('ProductAdd', ProductAdd)
-// .component('AppCom', AppCom)
-// App.mount('#app')
-
-app.use(_store__WEBPACK_IMPORTED_MODULE_4__["default"]).mount('#app');
+app.component("ProductEdit", _components_product_ProductEdit__WEBPACK_IMPORTED_MODULE_3__["default"]);
+app.component("StockManage", _components_stock_StockManage__WEBPACK_IMPORTED_MODULE_4__["default"]);
+app.use(_store__WEBPACK_IMPORTED_MODULE_5__["default"]).mount('#app');
 
 /***/ }),
 
@@ -23091,6 +23090,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "EDIT_PRODUCT": () => (/* binding */ EDIT_PRODUCT),
 /* harmony export */   "GET_BRANDS": () => (/* binding */ GET_BRANDS),
 /* harmony export */   "GET_CATEGORIES": () => (/* binding */ GET_CATEGORIES),
+/* harmony export */   "GET_PRODUCT": () => (/* binding */ GET_PRODUCT),
 /* harmony export */   "GET_SIZES": () => (/* binding */ GET_SIZES)
 /* harmony export */ });
 // For category
@@ -23102,6 +23102,7 @@ var GET_SIZES = 'GET_SIZES'; // For product
 
 var ADD_PRODUCT = 'ADD_PRODUCT';
 var EDIT_PRODUCT = 'EDIT_PRODUCT';
+var GET_PRODUCT = 'GET_PRODUCT';
 
 /***/ }),
 
@@ -41177,6 +41178,27 @@ const __exports__ = /*#__PURE__*/(0,E_xampp_htdocs_laravel_vue_inventory_node_mo
 /* hot reload */
 if (false) {}
 
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (__exports__);
+
+/***/ }),
+
+/***/ "./resources/js/components/stock/StockManage.vue":
+/*!*******************************************************!*\
+  !*** ./resources/js/components/stock/StockManage.vue ***!
+  \*******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var E_xampp_htdocs_laravel_vue_inventory_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
+const script = {}
+
+;
+const __exports__ = /*#__PURE__*/(0,E_xampp_htdocs_laravel_vue_inventory_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_0__["default"])(script, [['__file',"resources/js/components/stock/StockManage.vue"]])
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (__exports__);
 
