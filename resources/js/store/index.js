@@ -10,6 +10,8 @@ import brands from './modules/brand'
 import sizes from './modules/size'
 // import product index
 import products from './modules/product'
+// import stock index
+import stocks from './modules/stock'
 
 const store = createStore({
    modules: {
@@ -17,7 +19,8 @@ const store = createStore({
      categories,
      brands,
      sizes,
-     products
+     products,
+     stocks
     }
 })
 

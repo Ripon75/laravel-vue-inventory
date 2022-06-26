@@ -25,5 +25,17 @@ export default {
         .catch((error) => {
             commit(mutations.SET_ERRORS, error.response.data.errors)
         });
+    },
+
+    [actions.GET_PRODUCT]({commit}) {
+        axios.get('/api/products')
+        .then((response) => {
+                if (response.data.success) {
+                    commit(mutations.SET_PRODUCTS, response.data.data)
+                }
+        })
+        .catch((error) => {
+            console.log(error)
+        })
     }
 }

@@ -33,6 +33,7 @@ Route::middleware(['auth:sanctum'])->group(function() {
     // Product route
     Route::resource('products', ProductController::class);
     // Stock route
-    Route::get('/stock', [StockController::class, 'stock'])->name('stocks');
+    Route::get('/stocks', [StockController::class, 'stock'])->name('stocks');
+    Route::post('/stocks', [StockController::class, 'stockSubmit'])->name('stocks.submit');
 });
 
