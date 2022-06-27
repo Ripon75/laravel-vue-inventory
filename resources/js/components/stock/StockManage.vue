@@ -18,6 +18,10 @@
                                 </select>
                             </div>
                             <div class="form-group">
+                                <label>Date <span class="text-danger">*</span></label>
+                                <input type="date" class="form-control" v-model="form.date">
+                            </div>
+                            <div class="form-group">
                                 <label>Stock type <span class="text-danger">*</span></label>
                                 <select v-model="form.stock_type" class="form-control">
                                     <option value="in">IN</option>
