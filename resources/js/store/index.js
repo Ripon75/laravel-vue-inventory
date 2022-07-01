@@ -12,6 +12,8 @@ import sizes from './modules/size'
 import products from './modules/product'
 // import stock index
 import stocks from './modules/stock'
+// import return product index
+import returnProducts from './modules/returnProduct'
 
 const store = createStore({
    modules: {
@@ -20,7 +22,8 @@ const store = createStore({
      brands,
      sizes,
      products,
-     stocks
+     stocks,
+     returnProducts
     }
 })
 

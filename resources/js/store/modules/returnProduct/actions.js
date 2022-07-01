@@ -3,11 +3,11 @@ import * as mutations from '../../mutation-types'
 import axios from 'axios'
 
 export default {
-    [actions.SUBMIT_STOCK]({commit}, payload) {
-        axios.post('/stocks', payload)
+    [actions.SUBMIT_RETURN_PRODUCT]({commit}, payload) {
+        axios.post('/return-products', payload)
         .then((response) => {
             if (response.data.success) {
-                window.location.href = '/stocks'
+                window.location.href = '/return-products'
             }
         })
         .catch((error) => {

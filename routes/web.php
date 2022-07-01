@@ -1,11 +1,12 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Admin\CategoryController;
-use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\SizeController;
-use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\StockController;
+use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\ReturnProductController;
 
 
 Route::get('/', function () {
@@ -35,6 +36,10 @@ Route::middleware(['auth:sanctum'])->group(function() {
     // Stock route
     Route::get('/stocks', [StockController::class, 'stock'])->name('stocks');
     Route::post('/stocks', [StockController::class, 'stockSubmit'])->name('stocks.submit');
-    Route::get('/stocks/history', [StockController::class, 'stockHistory'])->name('stocks.history');
+    Route::get('/stocks/history', [StockController::class, 'history'])->name('stocks.history');
+    // Return product route
+    Route::get('/return-products', [ReturnProductController::class, 'returnProduct'])->name('return.products');
+    Route::post('/return-products', [ReturnProductController::class, 'returnProductSubmit'])->name('return.products.submit');
+    Route::get('/return-products/history', [ReturnProductController::class, 'history'])->name('return.products.history');
 });
 

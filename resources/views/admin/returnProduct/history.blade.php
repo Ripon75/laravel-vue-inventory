@@ -6,12 +6,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Brand list</h1>
+            <h1 class="m-0">Return product</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Home</a></li>
-              <li class="breadcrumb-item active">Brand List</li>
+              <li class="breadcrumb-item active">Return product history</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -29,40 +29,24 @@
             {{-- card --}}
             <div class="card card-primary card-outline">
               <div class="card-body">
-                <h5 class="card-title">Brand List</h5> <br>
-
-                <a href="{{ route('brands.create') }}" 
-                  class="btn btn-success btn-sm mb-2 mt-2">
-                  <i class="fa fa-plus"></i> Create
-                </a>
+                <h5 class="card-title">Return product history</h5> <br>
 
                 <table class="table table-bordered datatable">
                     <thead>
                         <th>SL</th>
                         <th>Name</th>
-                        <th>Action</th>
+                        <th>Product</th>
+                        <th>Size</th>
+                        <th>Quantity</th>
                     </thead>
                     <tbody>
-                        @foreach ($brands as $key => $brand)
+                        @foreach ($returnProducts as $key => $product)
                         <tr class="text-center">
                             <td>{{ ++$key }}</td>
-                            <td>{{ $brand->name }}</td>
-                            <td>
-                                <a href="{{ route('brands.edit', $brand->id) }}" class="btn btn-info">
-                                  <i class="fa fa-edit"></i>
-                                </a>
-                                <a href="{{ route('brands.show', $brand->id) }}"  class="btn btn-success m-2">
-                                  <i class="fa fa-eye"></i>
-                                </a>
-                                <a href="javascript:;" class="btn btn-danger sweet-alert-delete" data-form-id="brand-delete-{{ $brand->id }}">
-                                  <i class="fa fa-trash"></i>
-                                </a>
-                                <form id="brand-delete-{{ $brand->id }}" action="{{ route('brands.destroy', $brand->id) }}" method="POST">
-                                  @csrf
-                                  @method('DELETE')
-
-                                </form>
-                            </td>
+                            <td>{{ $product->date }}</td>
+                            <td>{{ $product->product->name ?? null }}</td>
+                            <td>{{ $product->size->size ?? null }}</td>
+                            <td>{{ $product->quantity }}</td>
                         </tr>
                         @endforeach
                     </tbody>

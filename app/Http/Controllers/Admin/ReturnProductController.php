@@ -5,22 +5,21 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\ProductStock;
 use App\Models\ProductSizeStock;
+use App\Models\ReturnProduct;
 
-class StockController extends Controller
+class ReturnProductController extends Controller
 {
-    public function stock()
+    public function returnProduct()
     {
-        return view('admin.stock.stock');
+        return view('admin.returnProduct.return');
     }
 
-    public function stockSubmit(Request $request)
+    public function returnProductSubmit(Request $request)
     {
        $validator = Validator::make($request->all(), [
             'product_id' => ['required', 'integer'],
             'date'       => ['required'],
-            'stock_type' => ['required'],
             'items'      => ['required']
         ]);
 
@@ -32,13 +31,12 @@ class StockController extends Controller
             ], 401);
         }
 
-        //store product stock
+        //store return product stock
         foreach ($request->items as $item) {
             if ($item['quantity'] && $item['quantity'] > 0) {
-                $itemObj             = new ProductStock();
+                $itemObj             = new ReturnProduct();
                 $itemObj->product_id = $request->product_id;
                 $itemObj->date       = $request->date;
-                $itemObj->status     = $request->stock_type;
                 $itemObj->quantity   = $item['quantity'];
                 $itemObj->size_id    = $item['size_id'];
                 $res = $itemObj->save();
@@ -46,31 +44,27 @@ class StockController extends Controller
                 if ($res) {
                     $psq = ProductSizeStock::where('product_id', $request->product_id)
                     ->where('size_id', $item['size_id'])->first();
-                    if ( $request->stock_type === 'in') {
-                        // stock in
-                        $psq->quantity = $psq->quantity + $item['quantity'];
-                    }else {
-                        // stock out
-                        $psq->quantity = $psq->quantity - $item['quantity'];
-                    }
+
+                    // stock in
+                    $psq->quantity = $psq->quantity + $item['quantity'];
                     $psq->save();
                 }
             }
         }
-        flash('Product update successfully')->success();
+        flash('Return product update successfully')->success();
 
         return response()->json([
             'success' => true,
-            'message' => 'Product create successfully done.'
+            'message' => 'Return product successfully done.'
         ], 201);
     }
 
     public function history()
     {
-        $stocks = ProductStock::orderBy('created_at', 'DESC')->get();
+        $returnProducts = ReturnProduct::orderBy('created_at', 'DESC')->get();
 
-        return view('admin.stock.history', [
-            'stocks' => $stocks
+        return view('admin.returnProduct.history', [
+            'returnProducts' => $returnProducts
         ]);
     }
 }
