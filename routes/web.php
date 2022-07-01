@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\SizeController;
 use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\StockController;
@@ -23,8 +24,12 @@ Route::middleware([
     })->name('dashboard');
 });
 
+Route::get('/logout',[ UserController::class, 'logout'])->name('users.logout');
+
 // Check authentication
 Route::middleware(['auth:sanctum'])->group(function() {
+    // Users route
+    Route::resource('users', UserController::class);
     // Category route
     Route::resource('categories', CategoryController::class);
     // Brand route
